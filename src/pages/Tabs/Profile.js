@@ -1,21 +1,34 @@
 import React from "react";
-import { IonPage, IonContent, IonCard, IonCardContent, IonList, IonItem, IonLabel, IonRow, IonIcon, IonButton, IonGrid, IonCol } from "@ionic/react";
-import SmallHeader from '../../components/Header/SmallHeader';
-//import LargeHeader from '../../components/Headers/LargeHeader';
-import { toast } from '../../helpers/toast';
-import firebase from '../../firebase';
-import UserContext from '../../contexts/UserContext';
+import {
+  IonContent,
+  IonPage,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonButton,
+  IonCardContent,
+  IonCard,
+  IonList,
+  IonItem,
+  IonIcon,
+  IonLabel,
+} from "@ionic/react";
 import { personCircleOutline, mailOutline } from "ionicons/icons";
+import UserContext from "../../contexts/UserContext";
+import firebase from "../../firebase";
+import { toast } from "../../helpers/toast";
+import SmallHeader from "../../components/Header/SmallHeader";
+import LargeHeader from "../../components/Header/LargeHeader";
 
 const Profile = (props) => {
-  const {user} = React.useContext(UserContext);
+  const { user } = React.useContext(UserContext);
 
   async function logoutUser() {
     try {
       await firebase.logout();
       props.history.push("/");
       toast("You have logged out successfully.");
-    } catch(err) {
+    } catch (err) {
       console.error("Logout Error", err);
       toast(err.message);
     }
@@ -23,9 +36,9 @@ const Profile = (props) => {
 
   return (
     <IonPage>
-      <SmallHeader title="Profile"/>
-      <IonContent fullscreen>
-        {/*<LargeHeader title="Profile"/>*/}
+      <SmallHeader title="Profile" />
+      <IonContent>
+        <LargeHeader title="Profile" />
         {user ? (
           <>
             <IonCard>
@@ -51,33 +64,46 @@ const Profile = (props) => {
             </IonCard>
             <IonRow>
               <IonCol>
-                <IonButton expand="block" routerDirection={"/edit-profile"} color="primary" fill="outline">
+                <IonButton
+                  expand="block"
+                  routerLink={`/edit-profile`}
+                  color="primary"
+                  fill="outline"
+                >
                   Edit Profile
                 </IonButton>
               </IonCol>
             </IonRow>
             <IonRow>
               <IonCol>
-                <IonButton expand="block" onClick={logoutUser} >
+                <IonButton expand="block" color="primary" onClick={logoutUser}>
                   Log Out
                 </IonButton>
               </IonCol>
             </IonRow>
-          </>       
+          </>
         ) : (
           <IonGrid>
             <IonRow>
               <IonCol>
-                <IonButton expand="block" routerLink={"/register"} color="primary">
-                Sign Up
+                <IonButton
+                  expand="block"
+                  routerLink={`/register`}
+                  color="primary"
+                >
+                  Sign Up
                 </IonButton>
               </IonCol>
             </IonRow>
-
             <IonRow>
               <IonCol>
-                <IonButton expand="block" routerLink={"/login"} color="primary" fill="outline">
-                Log In
+                <IonButton
+                  expand="block"
+                  routerLink={`/login`}
+                  color="primary"
+                  fill="outline"
+                >
+                  Log In
                 </IonButton>
               </IonCol>
             </IonRow>
@@ -88,4 +114,4 @@ const Profile = (props) => {
   );
 };
 
-export default Profile; 
+export default Profile;
